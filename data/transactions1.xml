@@ -1,0 +1,12 @@
+<transactions>
+  <transaction>
+    <cardNumber>4111111111111111</cardNumber>
+    <amount>100.50</amount>
+    <timestamp>2023-01-01T10:00:00</timestamp>
+  </transaction>
+  <transaction>
+    <cardNumber>5111111111111111</cardNumber>
+    <amount>200.75</amount>
+    <timestamp>2023-01-01T11:00:00</timestamp>
+  </transaction>
+</transactions>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Processor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💳 Card Processor</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('submit')">Submit Transaction</button>
+            <button class="tab-btn" onclick="openTab('upload')">Process Files</button>
+            <button class="tab-btn" onclick="openTab('reports')">Reports</button>
+        </div>
+
+        <div id="submit" class="tab-content active">
+            <h2>Submit Transaction</h2>
+            <form id="transaction-form">
+                <input type="text" id="card-number" placeholder="Card Number" required maxlength="16">
+                <span id="card-type"></span>
+                <input type="number" id="amount" placeholder="Amount" step="0.01" min="0.01" required>
+                <button type="submit">Process</button>
+            </form>
+            <div id="transaction-result"></div>
+        </div>
+
+        <div id="upload" class="tab-content">
+            <h2>Upload Transaction Files</h2>
+            <input type="file" id="transaction-files" multiple accept=".csv,.json,.xml">
+            <button id="process-btn" onclick="processFiles()">Process Files</button>
+            <div id="file-results"></div>
+            <div id="file-progress"></div>
+        </div>
+
+        <div id="reports" class="tab-content">
+            <h2>Transaction Reports</h2>
+            <div class="report-filters">
+                <button onclick="loadSummary()">Summary</button>
+                <button onclick="loadRejected()">Rejected Transactions</button>
+            </div>
+            <div id="report-results"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #7f8c8d;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    color: #2c3e50;
+    font-weight: bold;
+    border-bottom: 3px solid #3498db;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px 0;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+input,
+button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+#card-type {
+    font-size: 14px;
+    font-style: italic;
+    margin-top: -10px;
+}
+
+/* Status Messages */
+#transaction-result,
+#file-results {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Report Filters */
+.report-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Chart Section */
+.chart-container {
+    margin-top: 15px;
+}
+
+.chart-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.chart-label {
+    width: 150px;
+    font-weight: bold;
+}
+
+.chart-bar-container {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    margin: 0 10px;
+    overflow: hidden;
+}
+
+.chart-bar {
+    height: 100%;
+    background-color: #3498db;
+    transition: width 0.5s;
+}
+
+.chart-value {
+    width: 50px;
+    text-align: right;
+}
+
+/* Daily Summary */
+.daily-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.daily-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Rejected Transactions Grid */
+.rejected-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.grid-header {
+    font-weight: bold;
+    padding: 8px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+}
+
+.rejected-grid > div {
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Rejected Transactions Table */
+.rejected-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: monospace;
+    margin-top: 20px;
+}
+
+.rejected-table th,
+.rejected-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.rejected-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #333;
+}
+
+.rejected-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* File Upload Progress */
+#file-progress {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .rejected-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rejected-table th,
+    .rejected-table td {
+        padding: 8px;
+    }
+}
