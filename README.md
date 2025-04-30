@@ -1,104 +1,86 @@
-# Card Processor
+# My Card Processor
 
-Thank you for taking a the time to complete our interview code project. We realize that there are many ways to conduct the "technical part" of the interview process from L33T code tests to whiteboards, and each has its own respective pros / cons. We intentionally chose the take-home project approach because we believe it gives you the best chance to demonstrate your skills and knowledge in a "normal environment" - i.e. your computer, keyboard, and IDE.
+This project implements a simplified credit card transaction processor as part of a full-stack development interview exercise. It includes a web-based user interface for submitting transactions and viewing reports, a server component with business logic for processing transactions from various file formats, and file-based data persistence.
 
-This short exercise is designed to give us a sense of how you approach full stack development. We’re looking for clarity of thought, communication, and code organization — not perfection or a complete product.
+## How to Run Your Code
 
-Please treat this as something you’d spend **3-5 hours** on. If anything is unclear or you'd make a different decision in a real-world scenario, feel free to call that out.
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/Sreenija-Reddy/my-card-processor.git](https://github.com/Sreenija-Reddy/my-card-processor.git)
+    cd my-card-processor
+    ```
 
-We encourage you to have fun with the project, while producing a solution that you believe accurately represents how you would bring your skillset to the team.
+2.  **Navigate to the server directory:**
+    ```bash
+    cd jgretz
+    ```
 
-We have attempted to make this repo as clear as possible, but if you have any questions, we encourage you to reach out.
+3.  **Install server dependencies:**
+    ```bash
+    npm install
+    ```
 
----
+4.  **Start the server:**
+    ```bash
+    npm start
+    ```
+    The server will start and listen on `http://localhost:3000`. You should see output in the console indicating the server is running and the locations of the project root, data directory, and storage file.
 
-## 📟 Overview
+5.  **Open the user interface:**
+    Open your web browser and navigate to `http://localhost:3000`. This will serve the `public/index.html` file.
 
-You’ll build a small system that mimics a simplified credit card transaction processor. Your submission should include:
+## Functionality
 
-- A **web-based user interface**
-  - including a **reporting view** to summarize processed data
-- A **server component** with appropriate business logic
-- **Data persistence** (in-memory, file-based, or database - your choice)
+The application provides the following functionality:
 
----
+* **User Interface:**
+    * A tab-based interface with sections for submitting single transactions, uploading transaction files, and viewing reports.
+    * A form to manually enter a card number and amount for processing.
+    * A file upload section to select and process CSV, JSON, and XML files containing transaction data.
+    * A reporting view that summarizes processed transaction volume by card type and day, and lists rejected transactions.
 
-## 🧹 Requirements
+* **Logic:**
+    * **Accepts Transaction Records:** Processes transaction records from uploaded CSV, JSON, and XML files located in the `data` directory on server startup and from user-uploaded files.
+    * **File Processing:** Reads and parses CSV, JSON, and XML files.
+        * **CSV:** Expects files with columns named (case-insensitive) `cardNumber` or `card`, `amount`, and optionally `timestamp`.
+        * **JSON:** Expects an array of transaction objects with properties named `cardNumber` or `card`, `amount`, and optionally `timestamp`.
+        * **XML:** Expects a root element `transactions` containing multiple `transaction` elements, each with `cardNumber` or `card`, `amount`, and optionally `timestamp` elements.
+    * **Card Type Determination:** Determines the card type based on the first digit of the card number:
+        * `3`: American Express
+        * `4`: Visa
+        * `5`: MasterCard
+        * `6`: Discover
+    * **Card Number Validation:** Validates card numbers based on the leading digit and length (13-16 digits).
+    * **Amount Validation:** Ensures the transaction amount is a positive number.
+    * **Transaction Processing:** Processes valid transactions and stores them. Invalid or unrecognized card numbers or amounts result in rejected transactions.
 
-You can implement this however you like, as long as the following functionality is covered:
+* **Persistence:**
+    * Transaction data (both processed and rejected) is stored in a file named `transactions.json` within the `jgretz/storage` directory. This ensures data persistence across server restarts.
+    * Initial data from files in the `jgretz/data` directory is loaded and processed on server startup.
 
-### 1. User Interface
+* **Reporting:**
+    * **Total Processed Volume:** Displays the total number of processed transactions and the total processed amount.
+    * **By Card Type:** Shows a summary of processed transactions grouped by card type.
+    * **By Day:** Provides a summary of processed transactions grouped by the date (based on the timestamp).
+    * **Rejected Transactions:** Lists all rejected transactions, including the card number (masked), amount, reason for rejection, and timestamp.
 
-- A minimal web interface for interacting with the system
-- Includes a way to view and/or submit transaction data
-- Can be built using any approach / tech stack you prefer
+## Decisions and Tradeoffs
 
-### 2. Logic
+* **Data Persistence:** I chose file-based persistence using JSON for simplicity and ease of implementation within the given time frame. For a more robust application, a database (like PostgreSQL or MongoDB) would be a better choice.
+* **Card Number Validation:** A basic card number validation is implemented based on the leading digit and length. A more comprehensive validation would involve using the Luhn algorithm.
+* **Error Handling:** Basic error handling is implemented on both the client and server sides. More detailed and user-friendly error messages could be provided.
+* **UI Framework:** Vanilla JavaScript, HTML, and CSS were used for the user interface to avoid the overhead of learning and integrating a front-end framework within the limited time. A framework like React or Vue would allow for a more component-based and maintainable UI in a larger application.
+* **File Processing:** The server handles processing of CSV, JSON, and XML files. For very large files, streaming and batch processing could be implemented to improve performance and memory usage.
+* **Security:** Minimal security considerations were taken in this simplified scenario. In a real-world application dealing with financial data, significant attention would need to be paid to data encryption, secure API endpoints, and protection against common web vulnerabilities. CORS is enabled for local development.
 
-- You need to accept transaction records
-  - These records will come from the provided files
-  - The files in the test directory are smaller and meant to ease development
-  - The files in the data directory are larger and mean to be the "real transactions"
-- Each record includes a card number, timestamp, and amount
-- Each directory contains 3 files that need to be processed to capture all transactions
-- Card type is determined by the leading character of the card as follows:
-  - Amex (3)
-  - Visa (4)
-  - MasterCard (5)
-  - Discover (6)
-- Invalid or unrecognized card numbers should be rejected
+## Assumptions and Known Limitations
 
-### 3. Persistence
+* **File Format Consistency:** The file processing assumes a consistent structure in the input files (e.g., specific column names in CSV, property names in JSON, element names in XML).
+* **Timestamp Format:** The timestamp is assumed to be in a format that JavaScript's `Date` object can parse.
+* **No Authentication/Authorization:** The application does not implement any user authentication or authorization.
+* **Basic UI:** The user interface is minimal and primarily focused on functionality. Styling and responsiveness could be improved.
+* **No Unit Tests:** Due to time constraints, unit tests were not included. In a production application, comprehensive unit and integration tests are crucial.
+* **Limited Error Feedback:** Error messages to the user are basic. More specific feedback could enhance the user experience.
+* **No Real-time Updates:** Reports are updated only when explicitly requested. Real-time updates using WebSockets could be considered for a more dynamic experience.
 
-- Transactions must be stored and retrievable after creation
-- Choose any persistence mechanism
-
-### 4. Reporting
-
-- Provide summaries of total processed volume:
-  - By Card
-  - By Card Type
-  - By Day (based on timestamp)
-- Provide a list of "rejected" transactions
-
----
-
-## ✅ What We’re Looking For
-
-- Clear, maintainable code
-- A working implementation of the core requirements
-- Reasonable structure and organization
-- Good judgment in scoping and tradeoffs
-
-Bonus points (not required) for:
-
-- Tests
-- Clear commit history
-- Clean and responsive UI
-
-## 🧠 Final Thoughts and Hints
-
-- In this scenario, you are the initial architect creating the first pass at this project. You can consider our review the same as a Senior level engineer coming on to the project. Make sure that when we "pick up" the repo, it is clear how to stand up the project, run the solution, and potentially contribute code
-- Since you are tackling this specific project, our expectation is that you are at a senior engineer level. While we 100% want your code to represent your preferred style, there are some things we consider "basic" that should be in your submission. These include ideas like the following list. This list is not exhaustive, it is meant to point in a direction:
-  - Clear, consistent, readable code
-  - Proper use of your selected stack
-    - for example, if you choose C#, we would expect to see IOC/DI appropriately implemented
-  - DRY
-  - Low cyclomatic complexity
-  - Low Coupling / High Cohesion
-  - Clear thought and patterns for maintainability and expansion
-    - This scenario is obviously simplified from reality, that said you should consider future requests like other transaction types, different file formats, etc. - this will at minimum, be a topic in the conversation
-- While it should be obvious, this scenario involves "money". This means numerical accuracy is required and at least minimal security should be considered in your submission (we aren't going to "hack your solution", but there shouldn't be open API endpoints either).
-- We do NOT expect you to be a designer, we do expect you to consider your user and make the experience intuitive and easy to use
-
----
-
-## 📦 Submitting
-
-- Fork this repository and push your implementation to your fork
-- Submit a pr to this repository when you are ready for us to review your code
-  - We will close the PR then review the code on your fork
-- Include / Update `README.md` to explain:
-  - How to run your code
-  - Any decisions or tradeoffs you made
-  - Any assumptions or known limitations
+This implementation provides a functional foundation for a simplified card transaction processor, covering the core requirements of the interview exercise. Further development would focus on addressing the limitations and incorporating more robust features for a production-ready application.
