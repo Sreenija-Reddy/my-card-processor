@@ -12,7 +12,7 @@ This project implements a simplified credit card transaction processor as part o
 
 2.  **Navigate to the server directory:**
     ```bash
-    cd jgretz
+    cd server # or whatever the correct folder is
     ```
 
 3.  **Install server dependencies:**
